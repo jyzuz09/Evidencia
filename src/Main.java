@@ -234,7 +234,7 @@ public class Main {
         //String folio = generarFolio(5);
 
         if (doctor != null && paciente != null) {
-            admin.crearCita(sistema, "FOLIO", fecha, hora, doctor, paciente, motivo);
+            admin.crearCita(sistema, folio, fecha, hora, doctor, paciente, motivo);
             System.out.println("Cita creada correctamente.");
 
             //escribirTXT
