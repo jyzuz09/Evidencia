@@ -12,12 +12,13 @@ public class Main {
     private static final String DB_FOLDER = "db";  // Carpeta donde se guardarán los archivos
 
     public static void main(String[] args) {
+
         //db folder
         File dbFolder = new File(DB_FOLDER);
         if (!dbFolder.exists()) {
             dbFolder.mkdir();  // Crear la carpeta db si no existe
         }
-            // Cargar los registros previos desde los archivos CSV
+        // Cargar los registros previos desde los archivos CSV
         cargarRegistros();
 
 
@@ -135,7 +136,7 @@ public class Main {
 
     // Cargar los doctores desde el archivo CSV
     public static void CargarRegistroDoctores() {
-        try (BufferedReader br = new BufferedReader(new FileReader("/doctor_registros.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(DB_FOLDER + "/doctor_registros.csv"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] campos = linea.split(",");
@@ -155,7 +156,7 @@ public class Main {
 
     // Cargar los pacientes desde el archivo CSV
     public static void CargarRegistroPacientes() {
-        try (BufferedReader br = new BufferedReader(new FileReader("/paciente_registros.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(DB_FOLDER + "/paciente_registros.csv"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] campos = linea.split(",");
@@ -174,7 +175,7 @@ public class Main {
 
     // Cargar las citas desde el archivo CSV
     public static void CargarRegistroCitas() {
-        try (BufferedReader br = new BufferedReader(new FileReader("/cita_registros.csv"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(DB_FOLDER + "/cita_registros.csv"))) {
             String linea;
             while ((linea = br.readLine()) != null) {
                 String[] campos = linea.split(",");
@@ -203,7 +204,7 @@ public class Main {
     // Guardar los registros en los archivos CSV
     public static void guardarRegistros() {
         // Guardar los doctores
-        try (FileWriter writer = new FileWriter("/doctor_registros.csv")) {
+        try (FileWriter writer = new FileWriter(DB_FOLDER + "/doctor_registros.csv")) {
             for (Usuario usuario : sistema.getUsuarios()) {
                 if (usuario instanceof Doctor) {
                     Doctor doctor = (Doctor) usuario;
@@ -217,7 +218,7 @@ public class Main {
         }
 
         // Guardar los pacientes
-        try (FileWriter writer = new FileWriter("/paciente_registros.csv")) {
+        try (FileWriter writer = new FileWriter(DB_FOLDER + "/paciente_registros.csv")) {
             for (Usuario usuario : sistema.getUsuarios()) {
                 if (usuario instanceof Paciente) {
                     Paciente paciente = (Paciente) usuario;
@@ -231,7 +232,7 @@ public class Main {
         }
 
         // Guardar las citas
-        try (FileWriter writer = new FileWriter("/cita_registros.csv")) {
+        try (FileWriter writer = new FileWriter(DB_FOLDER + "/cita_registros.csv")) {
             for (Cita cita : sistema.getCitas()) {
                 writer.append(cita.getFolio()).append(",")
                         .append(cita.getFecha()).append(",")
@@ -423,7 +424,7 @@ public class Main {
         for (Cita cita : sistema.getCitas()) {
             System.out.println("Cita: " + cita.getFolio() +" "+ cita.getFecha() + " " + cita.getHora() + " | Doctor: " + cita.getDoctor().getNombre() + " | Paciente: " + cita.getPaciente().getNombre() + " | Motivo de cita: " + cita.getMotivo());
         }
-    } //MOSTRAR CITAS
+    } 
 
 
     public static String generarFolio(int longitud) {
@@ -441,8 +442,5 @@ public class Main {
         return folio.toString();
     }
 }
-
-
-
 
 
