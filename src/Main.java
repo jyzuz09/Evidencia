@@ -2,7 +2,8 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
 import java.util.*;
-
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class Main {
     private static SistemaCitas sistema = new SistemaCitas();
@@ -112,6 +113,14 @@ public class Main {
     }
 
     /// //NEW ADDED TXT////
+    public static void escribirTXT(String archivo, String mensaje) {
+        try (FileWriter writer = new FileWriter(archivo, true)) {
+            writer.append(mensaje);
+            writer.append("\n");
+        } catch (IOException e) {
+            System.out.println("Error al guardar los cambios en el archivo CSV: " + e.getMessage());
+        }
+    }
 
     // Método para cargar los registros desde los archivos CSV
 
