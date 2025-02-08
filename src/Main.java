@@ -310,7 +310,7 @@ public class Main {
     // generarFolio
     public static String generarFolio(int longitud) {
         // Definir los caracteres posibles para el folio
-        String caracteres = "0123456789";
+        String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random = new Random();
         StringBuilder folio = new StringBuilder();
 
