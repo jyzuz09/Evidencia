@@ -12,8 +12,12 @@ public class Main {
     private static final String DB_FOLDER = "db";  // Carpeta donde se guardarán los archivos
 
     public static void main(String[] args) {
-
-        // Cargar los registros previos desde los archivos CSV
+        //db folder
+        File dbFolder = new File(DB_FOLDER);
+        if (!dbFolder.exists()) {
+            dbFolder.mkdir();  // Crear la carpeta db si no existe
+        }
+            // Cargar los registros previos desde los archivos CSV
         cargarRegistros();
 
 
