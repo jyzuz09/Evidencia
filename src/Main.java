@@ -25,7 +25,7 @@ public class Main {
         //Menú login
 
         boolean ciclo = true;
-        while(ciclo) {
+        while (ciclo) {
             MenuPrincipal();
             int entrar = scanner.nextInt();
             scanner.nextLine(); // Limpiar el buffer del scanner
@@ -44,18 +44,18 @@ public class Main {
                                 case 1:
                                     System.out.print("Ingrese ID del Doctor: ");
                                     String id = scanner.nextLine();
-                                    if(obtenerDoctorPorIdaux(id)){
+                                    if (obtenerDoctorPorIdaux(id)) {
                                         System.out.print("ID ocupado: ");
-                                    }else {
+                                    } else {
                                         registrarDoctor(id);
                                     }
                                     break;
                                 case 2:
                                     System.out.print("Ingrese ID del Paciente: ");
                                     String id1 = scanner.nextLine();
-                                    if(obtenerPacientePorIdaux(id1)){
+                                    if (obtenerPacientePorIdaux(id1)) {
                                         System.out.print("ID ocupado: ");
-                                    }else {
+                                    } else {
                                         registrarPaciente(id1);
                                     }
                                     break;
@@ -87,7 +87,7 @@ public class Main {
                 case 2:
                     System.out.println("Ingrese ID de Doctor:");
                     String id = scanner.nextLine();
-                    if(verificarAccesoDoctor(id, doctor)){
+                    if (verificarAccesoDoctor(id, doctor)) {
                         obtenerDoctorPorId(id).verCitas(sistema);
 
                     }
@@ -97,13 +97,13 @@ public class Main {
                 case 3:
                     System.out.println("Ingrese ID de Paciente:");
                     String id1 = scanner.nextLine();
-                    if(verificarAccesoPaciente(id1, paciente)){
+                    if (verificarAccesoPaciente(id1, paciente)) {
                         obtenerPacientePorId(id1).verCitas(sistema);
 
                     }
                     break;
                 case 4:
-                    ciclo=false;
+                    ciclo = false;
                     break;
 
 
@@ -111,7 +111,7 @@ public class Main {
         } //guardarRegistros
     }
 
-    /////NEW ADDED TXT////
+    /// //NEW ADDED TXT////
 
     // Método para cargar los registros desde los archivos CSV
 
@@ -119,13 +119,11 @@ public class Main {
     // Cargar los doctores desde el archivo CSV
 
 
-
     // Cargar los pacientes desde el archivo CSV
 
     // Cargar las citas desde el archivo CSV
 
     // Guardar los registros en los archivos CSV
-
     public static void MenuPrincipal() {
         System.out.println("\n--- Menú Principal ---");
         System.out.println("1. Administrador");
@@ -263,7 +261,8 @@ public class Main {
         }
         return null;
     }
-    public static boolean obtenerDoctorPorIdaux(String id){
+
+    public static boolean obtenerDoctorPorIdaux(String id) {
         for (Usuario usuario : sistema.getUsuarios()) {
             if (usuario instanceof Doctor && usuario.getId().equals(id)) {
                 return true;
@@ -303,12 +302,27 @@ public class Main {
     // Mostrar todas las citas
     public static void mostrarCitas() {
         for (Cita cita : sistema.getCitas()) {
-            System.out.println("Cita: " + cita.getFolio() +" "+ cita.getFecha() + " " + cita.getHora() + " | Doctor: " + cita.getDoctor().getNombre() + " | Paciente: " + cita.getPaciente().getNombre() + " | Motivo de cita: " + cita.getMotivo());
+            System.out.println("Cita: " + cita.getFolio() + " " + cita.getFecha() + " " + cita.getHora() + " | Doctor: " + cita.getDoctor().getNombre() + " | Paciente: " + cita.getPaciente().getNombre() + " | Motivo de cita: " + cita.getMotivo());
         }
-    } //MOSTRAR CITAS
+    }
 
 
     // generarFolio
+    public static String generarFolio(int longitud) {
+        // Definir los caracteres posibles para el folio
+        String caracteres = "0123456789";
+        Random random = new Random();
+        StringBuilder folio = new StringBuilder();
+
+        // Generar el folio de longitud especificada
+        for (int i = 0; i < longitud; i++) {
+            int indiceAleatorio = random.nextInt(caracteres.length());
+            folio.append(caracteres.charAt(indiceAleatorio));
+        }
+
+        return folio.toString();
+
+    }
 }
 
 
