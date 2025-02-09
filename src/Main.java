@@ -307,7 +307,6 @@ public class Main {
         System.out.println("8. Eliminar Paciente");
         System.out.println("9. Eliminar Doctor");
         System.out.println("10. Salir");
-        System.out.println("7. Salir");
         System.out.print("Seleccione una opción: ");
     }
 
