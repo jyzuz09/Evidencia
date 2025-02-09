@@ -1,5 +1,3 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
 import java.util.*;
 import java.io.FileWriter;
@@ -72,7 +70,7 @@ public class Main {
                                 case 4:
                                     mostrarCitas();
                                     break;
-                                case 7:
+                                case 10:
                                     continuar = false;
                                     System.out.println("Saliendo del sistema...");
                                     break;
@@ -81,6 +79,21 @@ public class Main {
                                     break;
                                 case 5:
                                     mostrarPacientes();
+                                    break;
+                                case 7:
+                                    System.out.print("Ingrese Folio de la cita a eliminar: ");
+                                    String folioCita = scanner.nextLine();
+                                    eliminarCita1(folioCita);
+                                    break;
+                                case 8:
+                                    System.out.print("Ingrese ID del Paciente a eliminar: ");
+                                    String idPacienteEliminar = scanner.nextLine();
+                                    eliminarPaciente(idPacienteEliminar);
+                                    break;
+                                case 9:
+                                    System.out.print("Ingrese ID del Doctor a eliminar: ");
+                                    String idDoctorEliminar = scanner.nextLine();
+                                    eliminarDoctor(idDoctorEliminar);
                                     break;
                                 default:
                                     System.out.println("Opción no válida.");
@@ -290,6 +303,10 @@ public class Main {
         System.out.println("4. Ver Citas");
         System.out.println("5. Ver Pacientes");
         System.out.println("6. Ver Doctores");
+        System.out.println("7. Eliminar Cita");
+        System.out.println("8. Eliminar Paciente");
+        System.out.println("9. Eliminar Doctor");
+        System.out.println("10. Salir");
         System.out.println("7. Salir");
         System.out.print("Seleccione una opción: ");
     }
@@ -309,7 +326,20 @@ public class Main {
         System.out.println("Doctor registrado correctamente.");
 
         //NEW ADDED//
-        escribirTXT("doctor_registros.csv", "Doctor Registrado: ID " + id + ", Nombre " + nombre + ", Especialidad " + especialidad);
+        escribirTXT("doctor_registros.csv", "Doctor Registrado" + "ID: " + id + ", Nombre: " + nombre + ", Especialidad: " + especialidad);
+    }
+
+
+    public static void eliminarDoctor (String id) {
+        Doctor doctorAEliminar = obtenerDoctorPorId(id);
+
+        if (doctorAEliminar != null) {
+            sistema.eliminarUsuario(doctorAEliminar);
+            System.out.println("Doctor eliminado correctamente.");
+            guardarRegistros();  // Actualizacion del archivo de doctores
+        } else {
+            System.out.println("Doctor con ID " + id + " no encontrado.");
+        }
     }
 
     // Registrar un paciente
@@ -327,8 +357,22 @@ public class Main {
         sistema.agregarUsuario(paciente);
         System.out.println("Paciente registrado correctamente.");
 
-        escribirTXT("paciente_registros.csv","Paciente Registrado: ID " + id + ", Nombre " + nombre + ", Edad " + edad);
+        escribirTXT("paciente_registros.csv","Paciente Registrado" + " ID: " + id + ", Nombre: " + nombre + ", Edad: " + edad);
     }
+
+    // Método para eliminar paciente mediante ID
+    public static void eliminarPaciente (String id) {
+        Paciente pacienteAEliminar = obtenerPacientePorId(id);
+
+        if (pacienteAEliminar != null) {
+            sistema.eliminarUsuario(pacienteAEliminar);
+            System.out.println("Paciente eliminado correctamente.");
+            guardarRegistros();  // Actualizacion del archivo de pacientes
+        } else {
+            System.out.println("Paciente con ID " + id + " no encontrado.");
+        }
+    }
+
 
     // Crear una cita
     public static void crearCita() {
@@ -358,11 +402,32 @@ public class Main {
             admin.crearCita(sistema, folio, fecha, hora, doctor, paciente, motivo);
             System.out.println("Cita creada correctamente.");
 
-            escribirTXT("cita_registros.csv","Cita creada: Folio " + folio + ", Fecha " + fecha + ", Hora " + hora + ", Doctor " + doctor.getNombre() + ", Paciente " + paciente.getNombre());
+            escribirTXT("cita_registros.csv","Cita creada" + " Folio: " + folio + ", Fecha: " + fecha + ", Hora: " + hora + ", Doctor: " + doctor.getNombre() + ", Paciente: " + paciente.getNombre());
         } else {
             System.out.println("Doctor o Paciente no encontrados.");
         }
     }
+
+    // Método para eliminar cita mediante folio
+    public static void eliminarCita1 (String folio) {
+        Cita citaAEliminar = null;
+        for (Cita cita : sistema.getCitas()) {
+            if (cita.getFolio().equals(folio)) {
+                citaAEliminar = cita;
+                break;
+            }
+        }
+
+        if (citaAEliminar != null) {
+            sistema.eliminarCita(citaAEliminar);
+            System.out.println("Cita eliminada correctamente.");
+            guardarRegistros();  // Actualización del archivo de citas
+        } else {
+            System.out.println("Cita con folio " + folio + " no encontrada.");
+        }
+    }
+
+
 
     // Mostrar todos los doctores
     public static void mostrarDoctores() {
@@ -424,7 +489,7 @@ public class Main {
         for (Cita cita : sistema.getCitas()) {
             System.out.println("Cita: " + cita.getFolio() +" "+ cita.getFecha() + " " + cita.getHora() + " | Doctor: " + cita.getDoctor().getNombre() + " | Paciente: " + cita.getPaciente().getNombre() + " | Motivo de cita: " + cita.getMotivo());
         }
-    } 
+    }
 
 
     public static String generarFolio(int longitud) {

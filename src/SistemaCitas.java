@@ -25,4 +25,12 @@ class SistemaCitas {
     public List<Usuario> getUsuarios() {
         return usuarios;
     }
+
+    public void eliminarUsuario(Usuario usuario) {
+        usuarios.remove(usuario);  // Elimina el usuario (doctor o paciente) de la lista
+    }
+
+    public void eliminarCita(Cita cita) {
+        citas.remove(cita);  // Elimina la cita de la lista
+    }
 }
